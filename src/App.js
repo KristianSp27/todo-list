@@ -29,7 +29,7 @@ const TaskCount = styled.span`
 `;
 const Tasks = styled.div``;
 const LIST = styled.li`
-  liststyle: "none";
+  liststyle: "numbered";
   text-decoration: "line-through";
 `;
 const App = () => {
@@ -51,7 +51,7 @@ const App = () => {
   const handleComplete = (id) => {
     let list = todoList.map((task) => {
       let item = {};
-      if (task.id == id) {
+      if (task.id === id) {
         if (!task.complete) {
           //Task is pending, modifying it to complete and increment the count
           setCompletedTaskCount(completedTaskCount + 1);
@@ -80,7 +80,7 @@ const App = () => {
           </TaskCount>
         </Tasks>
         <div>
-          <ul>
+          <ol type="1">
             {todoList.map((todo) => {
               return (
                 <LIST
@@ -88,7 +88,7 @@ const App = () => {
                   id={todo.id}
                   onClick={() => handleComplete(todo.id)}
                   style={{
-                    listStyle: "none",
+                    listStyle: "square",
                     textDecoration: todo.complete && "line-through",
                   }}
                 >
@@ -96,7 +96,7 @@ const App = () => {
                 </LIST>
               );
             })}
-          </ul>
+          </ol>
         </div>
       </div>
     </Container>
