@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import styled from "styled-components";
 import "./index.css";
 const Container = styled.div`
@@ -10,12 +10,12 @@ const Button = styled.button`
   display: inline-block;
   flex: 1;
   border: none;
-  background-color: teal;
+  background-color: ${(props) => (props.disabled ? "red" : "teal")};
   color: white;
   height: 30px;
   width: 50px;
   border-radius: 2px;
-  cursor: pointer;
+  cursor: ${(props) => (props.disabled ? "not-allowed" : "pointer")}; ;
 `;
 const Text = styled.input`
   border: 2px solid #000;
@@ -23,6 +23,7 @@ const Text = styled.input`
   padding: 5px;
   border-radius: 2px;
   margin: 5px;
+  cursor: "pointer";
 `;
 const TaskCount = styled.span`
   margin: 10px;
@@ -31,12 +32,15 @@ const Tasks = styled.div``;
 const LIST = styled.li`
   liststyle: "numbered";
   text-decoration: "line-through";
+  cursor: "pointer";
 `;
 const App = () => {
   const [input, setInput] = useState("");
   const [completedTaskCount, setCompletedTaskCount] = useState(0);
   const [todoList, setTodoList] = useState([]);
-  const handleClick = () => {
+  const handleClick = useCallback(() => {
+    if (input === "" || input.trim().length === 0) return;
+    console.log(input);
     const id = todoList.length + 1;
     setTodoList((prev) => [
       ...prev,
@@ -47,7 +51,8 @@ const App = () => {
       },
     ]);
     setInput("");
-  };
+  }, [input]);
+
   const handleComplete = (id) => {
     let list = todoList.map((task) => {
       let item = {};
@@ -65,12 +70,18 @@ const App = () => {
     });
     setTodoList(list);
   };
+
+  const handleKeyDown = (e) => {
+    if (e?.code === "Enter" || e?.code === "NumpadEnter") handleClick();
+  };
   return (
     <Container>
       <div>
         <h2>Todo List</h2>
-        <Text value={input} onInput={(e) => setInput(e.target.value)} />
-        <Button onClick={() => handleClick()}>Add</Button>
+        <Text value={input} onInput={(e) => setInput(e.target.value)} onKeyDown={handleKeyDown} />
+        <Button onClick={handleClick} disabled={input.trim().length === 0}>
+          Add
+        </Button>
         <Tasks>
           <TaskCount>
             <b>Pending Tasks</b> {todoList.length - completedTaskCount}
@@ -81,15 +92,17 @@ const App = () => {
         </Tasks>
         <div>
           <ol type="1">
-            {todoList.map((todo) => {
+            {todoList.map((todo, index) => {
               return (
                 <LIST
+                  key={`key-${index}`}
                   complete={todo.complete}
                   id={todo.id}
                   onClick={() => handleComplete(todo.id)}
                   style={{
                     listStyle: "square",
                     textDecoration: todo.complete && "line-through",
+                    cursor: "pointer",
                   }}
                 >
                   {todo.task}
