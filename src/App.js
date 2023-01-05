@@ -1,4 +1,4 @@
-import { useCallback, useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 import styled from "styled-components";
 import "./index.css";
 const Container = styled.div`
@@ -23,24 +23,24 @@ const Text = styled.input`
   padding: 5px;
   border-radius: 2px;
   margin: 5px;
-  cursor: "pointer";
+  cursor: pointer;
 `;
 const TaskCount = styled.span`
   margin: 10px;
 `;
 const Tasks = styled.div``;
-const LIST = styled.li`
-  liststyle: "numbered";
-  text-decoration: "line-through";
-  cursor: "pointer";
+const ListItem = styled.li`
+  cursor: pointer;
+  display: flex;
+  cursor: pointer;
+  width: 100%;
+  justify-content: space-between;
 `;
 const App = () => {
   const [input, setInput] = useState("");
-  const [completedTaskCount, setCompletedTaskCount] = useState(0);
   const [todoList, setTodoList] = useState([]);
   const handleClick = useCallback(() => {
     if (input === "" || input.trim().length === 0) return;
-    console.log(input);
     const id = todoList.length + 1;
     setTodoList((prev) => [
       ...prev,
@@ -54,16 +54,9 @@ const App = () => {
   }, [input]);
 
   const handleComplete = (id) => {
-    let list = todoList.map((task) => {
+    const list = todoList.map((task) => {
       let item = {};
       if (task.id === id) {
-        if (!task.complete) {
-          //Task is pending, modifying it to complete and increment the count
-          setCompletedTaskCount(completedTaskCount + 1);
-        } else {
-          //Task is complete, modifying it back to pending, decrement Complete count
-          setCompletedTaskCount(completedTaskCount - 1);
-        }
         item = { ...task, complete: !task.complete };
       } else item = { ...task };
       return item;
@@ -74,6 +67,12 @@ const App = () => {
   const handleKeyDown = (e) => {
     if (e?.code === "Enter" || e?.code === "NumpadEnter") handleClick();
   };
+
+  const handleClear = (id) => {
+    setTodoList((prev) => prev.filter((todo) => todo.id !== id));
+  };
+
+  const completedTaskCount = todoList.filter((todo) => todo.complete).length;
   return (
     <Container>
       <div>
@@ -91,25 +90,31 @@ const App = () => {
           </TaskCount>
         </Tasks>
         <div>
-          <ol type="1">
+          <ul style={{ listStyle: "none", padding: "0px" }}>
             {todoList.map((todo, index) => {
               return (
-                <LIST
+                <ListItem
                   key={`key-${index}`}
                   complete={todo.complete}
                   id={todo.id}
                   onClick={() => handleComplete(todo.id)}
-                  style={{
-                    listStyle: "square",
-                    textDecoration: todo.complete && "line-through",
-                    cursor: "pointer",
-                  }}
+                  style={{ textDecoration: todo.complete && "line-through" }}
                 >
                   {todo.task}
-                </LIST>
+                  {todo.complete && (
+                    <span
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        handleClear(todo.id);
+                      }}
+                    >
+                      X
+                    </span>
+                  )}
+                </ListItem>
               );
             })}
-          </ol>
+          </ul>
         </div>
       </div>
     </Container>
