@@ -17,6 +17,17 @@ const Button = styled.button`
   border-radius: 2px;
   cursor: ${(props) => (props.disabled ? "not-allowed" : "pointer")}; ;
 `;
+const SmallerButton = styled.button`
+  display: inline-block;
+  flex: 1;
+  border: none;
+  background-color: ${(props) => (props.disabled ? "red" : "teal")};
+  color: white;
+  height: 25px;
+  width: 45px;
+  border-radius: 2px;
+  cursor: ${(props) => (props.disabled ? "not-allowed" : "pointer")}; ;
+`;
 const Text = styled.input`
   border: 2px solid #000;
   width: 200px;
@@ -81,6 +92,7 @@ const App = () => {
         <Button onClick={handleClick} disabled={input.trim().length === 0}>
           Add
         </Button>
+
         <Tasks>
           <TaskCount>
             <b>Pending Tasks</b> {todoList.length - completedTaskCount}
@@ -90,7 +102,7 @@ const App = () => {
           </TaskCount>
         </Tasks>
         <div>
-          <ul style={{ listStyle: "none", padding: "0px" }}>
+          <ul style={{ listStyle: "none", padding: "0px", textDecoration: "none" }}>
             {todoList.map((todo, index) => {
               return (
                 <ListItem
@@ -103,12 +115,13 @@ const App = () => {
                   {todo.task}
                   {todo.complete && (
                     <span
+                      style={{ textDecoration: "none" }}
                       onClick={(e) => {
                         e.stopPropagation();
                         handleClear(todo.id);
                       }}
                     >
-                      X
+                      <SmallerButton onClick={() => todo.deleteTask()}> X </SmallerButton>
                     </span>
                   )}
                 </ListItem>

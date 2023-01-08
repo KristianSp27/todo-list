@@ -9,3 +9,6 @@ Update(5/1/2023):
 1.added the option to submit by clicking "Enter"
 2.removed the option to submit empty inputs and a "locked" cursor, which appears above the "Add" button when the input is empty(the button is disabled)
 3.added the "pointer" cursor when it's above the tasks
+
+Update(8/1/2023):
+Had an issue with the line through going through the delete button as well. In order to fix that, i added a brand new button specifically for that purpose, which also matches the colour scheme of the app better and provided the much needed solution to my problem.
