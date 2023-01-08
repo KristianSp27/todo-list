@@ -87,7 +87,9 @@ const App = () => {
   return (
     <Container>
       <div>
-        <h2>Todo List</h2>
+        <h2>
+          <center>To-do List</center>
+        </h2>
         <Text value={input} onInput={(e) => setInput(e.target.value)} onKeyDown={handleKeyDown} />
         <Button onClick={handleClick} disabled={input.trim().length === 0}>
           Add
