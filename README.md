@@ -12,3 +12,6 @@ Update(5/1/2023):
 
 Update(8/1/2023):
 Had an issue with the line through going through the delete button as well. In order to fix that, i added a brand new button specifically for that purpose, which also matches the colour scheme of the app better and provided the much needed solution to my problem.
+
+Update(9/1/2023):
+Made the delete button appear always, not just when a task is crossed out.

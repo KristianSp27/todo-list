@@ -115,7 +115,7 @@ const App = () => {
                   style={{ textDecoration: todo.complete && "line-through" }}
                 >
                   {todo.task}
-                  {todo.complete && (
+                  {
                     <span
                       style={{ textDecoration: "none" }}
                       onClick={(e) => {
@@ -125,7 +125,7 @@ const App = () => {
                     >
                       <SmallerButton onClick={() => todo.deleteTask()}> X </SmallerButton>
                     </span>
-                  )}
+                  }
                 </ListItem>
               );
             })}
