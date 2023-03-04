@@ -35,6 +35,7 @@ const Text = styled.input`
   border-radius: 2px;
   margin: 5px;
   cursor: pointer;
+  font-family: "Courgette", cursive;
 `;
 const TaskCount = styled.span`
   margin: 10px;
@@ -46,6 +47,9 @@ const ListItem = styled.li`
   cursor: pointer;
   width: 100%;
   justify-content: space-between;
+  font-family: "Courgette", cursive;
+  font-weight: bold;
+  font-size: 25px;
 `;
 const App = () => {
   const [input, setInput] = useState("");

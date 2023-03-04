@@ -15,3 +15,6 @@ Had an issue with the line through going through the delete button as well. In o
 
 Update(9/1/2023):
 Made the delete button appear always, not just when a task is crossed out.
+
+Update(4/3/2023):
+Had the idea to improve the looks of my list by adding a new font, which i imported from Google Fonts, as well as to increase the size a bit, so that the list itself is more visible and looks better. 
