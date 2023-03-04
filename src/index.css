@@ -1,4 +1,9 @@
 @import url('https://fonts.googleapis.com/css2?family=Courgette&family=Open+Sans&display=swap');
+
+center {
+  font-size: 2em;
+}
+
 html {
   background: url(./background.jpg) no-repeat center center fixed;
   -webkit-background-size: cover;
